@@ -61,10 +61,9 @@ float predictModel(Ptr<SVM> model, Mat &image)
     Mat imageResized;
     Mat flat;
     Mat image32F;
-    resize(image, imageResized, Size(300, 300));
+    resize(image, imageResized, Size(310, 310));
     imageResized.convertTo(image32F, CV_32F);
     flat = image32F.reshape(1, 1);
-    model->save("..\\model.xml");
     float result = model->predict(flat);
     return result;
 }
@@ -81,8 +80,45 @@ int main(int argc, char const *argv[])
     loadTrainData(imagesPath, "human", features, labels);
     std::cout << "Number of features loaded: " << features.size() << std::endl;
     std::cout << "Number of labels loaded: " << labels.size() << std::endl;
-    std::cout << "Training SVM model..." << std::endl;
+    std::cout << "\nTraining SVM model..." << std::endl;
     float error = trainModel(model, features, labels);
-    std::cout << "Error: " << error << std::endl;
+    std::cout << "Model Error: " << error << std::endl;
+
+    Mat image1 = imread("..\\images\\classification\\test\\humans\\human.1.jpg", IMREAD_GRAYSCALE);
+    Mat image2 = imread("..\\images\\classification\\test\\humans\\human.2.jpg", IMREAD_GRAYSCALE);
+    Mat image3 = imread("..\\images\\classification\\test\\humans\\human.3.jpg", IMREAD_GRAYSCALE);
+    Mat image4 = imread("..\\images\\classification\\test\\humans\\human.4.jpg", IMREAD_GRAYSCALE);
+    Mat image5 = imread("..\\images\\classification\\test\\humans\\human.5.jpg", IMREAD_GRAYSCALE);
+    Mat image6 = imread("..\\images\\classification\\test\\humans\\human.6.jpg", IMREAD_GRAYSCALE);
+
+    Mat image7 = imread("..\\images\\classification\\test\\cats\\cat.1.jpg", IMREAD_GRAYSCALE);
+    Mat image8 = imread("..\\images\\classification\\test\\cats\\cat.2.jpg", IMREAD_GRAYSCALE);
+    Mat image9 = imread("..\\images\\classification\\test\\cats\\cat.3.jpg", IMREAD_GRAYSCALE);
+    Mat image10 = imread("..\\images\\classification\\test\\cats\\cat.4.jpg", IMREAD_GRAYSCALE);
+    Mat image11 = imread("..\\images\\classification\\test\\cats\\cat.5.jpg", IMREAD_GRAYSCALE);
+
+    float label = predictModel(model, image1);
+    std::cout << "\nLabel: " << (label == 1 ? "cat" : "human") << std::endl;
+    label = predictModel(model, image2);
+    std::cout << "Label: " << (label == 1 ? "cat" : "human") << std::endl;
+    label = predictModel(model, image3);
+    std::cout << "Label: " << (label == 1 ? "cat" : "human") << std::endl;
+    label = predictModel(model, image4);
+    std::cout << "Label: " << (label == 1 ? "cat" : "human") << std::endl;
+    label = predictModel(model, image5);
+    std::cout << "Label: " << (label == 1 ? "cat" : "human") << std::endl;
+    label = predictModel(model, image6);
+    std::cout << "Label: " << (label == 1 ? "cat" : "human") << std::endl;
+
+    label = predictModel(model, image7);
+    std::cout << "\nLabel: " << (label == 1 ? "cat" : "human") << std::endl;
+    label = predictModel(model, image8);
+    std::cout << "Label: " << (label == 1 ? "cat" : "human") << std::endl;
+    label = predictModel(model, image9);
+    std::cout << "Label: " << (label == 1 ? "cat" : "human") << std::endl;
+    label = predictModel(model, image10);
+    std::cout << "Label: " << (label == 1 ? "cat" : "human") << std::endl;
+    label = predictModel(model, image11);
+    std::cout << "Label: " << (label == 1 ? "cat" : "human") << std::endl;
     return EXIT_SUCCESS;
 }
