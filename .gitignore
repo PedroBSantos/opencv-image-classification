@@ -1,0 +1,11 @@
+# vscode
+.vscode/
+
+# model
+model.xml
+
+# Executables
+*.exe
+
+#build directory
+build/
